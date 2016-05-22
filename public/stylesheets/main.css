@@ -1,0 +1,44 @@
+body {
+    padding-bottom: 70px;
+    font-size: 2em;
+}
+input{
+    font-size: 1.8em;
+}
+.center{
+    text-align: center;
+}
+#search_btn{
+    float : right;
+}
+.box{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+#footer{
+    background-color: #F8F8F8;
+    height: 80px;
+    margin-bottom: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+html{
+    position: relative;
+    min-height: 100%;
+}
+.nomargin{
+    margin: 0 0 0 0;
+}
+#name{
+    color : #2478FF;
+}
+.close{
+    float: none;
+}
+th{
+    text-align: center;
+}
+td{
+    text-align: center;
+}
