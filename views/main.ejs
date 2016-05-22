@@ -2,22 +2,97 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>MoneyPlan</title>
 
+    <!-- 제이쿼리 -->
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+    <!-- 부스트랩 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
+    <!-- datapicker 라이브러리 -->
     <link rel="stylesheet" href="/stylesheets/bootstrap-datepicker3.min.css">
     <script src="/javascripts/bootstrap-datepicker.min.js"></script>
     <script src="/locales/bootstrap-datepicker.kr.min.js"></script>
 
+    <!-- 날짜 라이브러리 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.js"></script>
 
-    <title>MoneyPlan</title>
+    <!-- css -->
     <link rel="stylesheet" href="/stylesheets/main.css">
-    <script type="text/javascript">
+
+    <!-- 리액트 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+
+    <!-- react 컴포넌트 -->
+    <script type="text/babel" src="/javascripts/component.react.js"></script>
+
+    <script type="text/babel">
+
+        var HomeKeeperTable = React.createClass({
+            render : () => {
+                var rows = this.props.homekeepers.map(function(homekeeper) {
+                    return (
+                            <HomeKeeperRow
+                    id={homekeeper.id}
+                    payDate={homekeeper.payDate}
+                    content={homekeeper.content}
+                    inOut={homekeeper.inOut}
+                    money={homekeeper.money}
+                    />
+                    );
+                });
+
+                return (
+                        <table class='table'>
+                        <tr><th>선택</th><th>사용일자</th><th>수입/지출</th><th>내역</th><th>금액</th><th>삭제</th>
+                        </tr>
+                        {rows}
+                        </table>
+                )
+            }
+
+        })
+
+
+        var HomeKeeperRow = React.createClass({
+            propType : {
+                id : React.PropTypes.number.isRequired,
+                payDate : React.isRequired,
+                in_out : React.isRequired,
+                money : React.PropTypes.number.isRequired
+            },
+            render: function() {
+                return (
+                        <tr>
+                        <td>
+                        <input type="radio" name="selecthomebook" hb_id="{this.prop.id}" paydate="{this.prop.payDate}"
+                in_out="{this.prop.inOut}" content="{this.prop.content}" money="{this.prop.money}"/>
+                        </td>
+                        <td>{this.prop.payDate}</td>
+                <td>{this.prop.inOut=="in"?"수입":"지출"}</td>
+                <td>{this.prop.content}</td>
+                <td>{this.prop.money}</td>
+                <td><button type="button" homebookid="{this.prop.id}" class="close">×</button></td>
+                </tr>
+
+                );
+            }
+        });
+
         var this_month = "2";
 
+        function makeTable(result){
+            ReactDOM.render(
+                    <HomeKeeperTable homekeepers={result} />,
+                    document.getElementById('homekeeper-table')
+            );
+        }
+
+/*
         function makeTable(result){
             var str ="<table class='table'><tr><th>선택</th><th>사용일자</th><th>수입/지출</th><th>내역</th><th>금액</th><th>삭제</th></tr>";
             var inSum = 0;
@@ -41,7 +116,7 @@
                 $(this).attr("handle","insertHomebook");
             }
         }
-
+*/
         function refreshTable(result){
             $.ajax({
                 method : 'get',
@@ -487,5 +562,9 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+<div id="homekeeper-table">
+
+</div>
 </body>
 </html>
