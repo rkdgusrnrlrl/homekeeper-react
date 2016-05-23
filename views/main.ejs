@@ -292,19 +292,19 @@
                 document.getElementById('main')
         );
     }
-
+    //React Component 가계부 테이블
     var HomeKeeperTable = React.createClass({
 
         render : function () {
             var rows = this.props.data.map(function(homekeeper) {
                 return (
                         <HomeKeeperRow
-                id={homekeeper.id}
-                payDate={homekeeper.payDate}
-                content={homekeeper.content}
-                inOut={homekeeper.inOut}
-                money={homekeeper.money}
-                />
+                            id={homekeeper.id}
+                            payDate={homekeeper.payDate}
+                            content={homekeeper.content}
+                            inOut={homekeeper.inOut}
+                            money={homekeeper.money}
+                        />
                 );
             });
 
@@ -319,7 +319,7 @@
 
     })
 
-
+    //React Component 가계부 테이블 한열
     var HomeKeeperRow = React.createClass({
         propType : {
             id : React.PropTypes.number.isRequired,
@@ -349,7 +349,6 @@
                         <td>{this.props.money}</td>
                         <td><button type="button" homebookid="{this.prop.id}" className="close">×</button></td>
                     </tr>
-
             );
         }
     });
@@ -449,9 +448,6 @@
                 insert_update()
             }
         });
-
-
-
 
         //수정하기 세션
         /*//모달창 띄우기
