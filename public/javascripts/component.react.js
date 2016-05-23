@@ -1,10 +1,10 @@
 /**
  * Created by rkdgusrnrlrl on 16. 5. 22.
  */
-
 var HomeKeeperTable = React.createClass({
-    render : () => {
-        var rows = this.props.homekeepers.map(function(homekeeper) {
+
+    render : function () {
+        var rows = this.props.data.map(function(homekeeper) {
             return (
                 <HomeKeeperRow
                     id={homekeeper.id}
@@ -39,16 +39,18 @@ var HomeKeeperRow = React.createClass({
         return (
             <tr>
                 <td>
-                    <input type="radio" name="selecthomebook" hb_id="{this.prop.id}" paydate="{this.prop.payDate}"
-                           in_out="{this.prop.inOut}" content="{this.prop.content}" money="{this.prop.money}"/>
+                    <input type="radio" name="selecthomebook" hb_id="{this.props.id}" paydate="{this.props.payDate}"
+                           in_out="{this.props.inOut}" content="{this.props.content}" money="{this.props.money}"/>
                 </td>
-                <td>{this.prop.payDate}</td>
-                <td>{this.prop.inOut=="in"?"수입":"지출"}</td>
-                <td>{this.prop.content}</td>
-                <td>{this.prop.money}</td>
+                <td>{this.props.payDate}</td>
+                <td>{this.props.inOut=="in"?"수입":"지출"}</td>
+                <td>{this.props.content}</td>
+                <td>{this.props.money}</td>
                 <td><button type="button" homebookid="{this.prop.id}" class="close">×</button></td>
             </tr>
 
         );
     }
 });
+
+
