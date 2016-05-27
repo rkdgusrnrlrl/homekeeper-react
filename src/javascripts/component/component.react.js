@@ -104,11 +104,14 @@ function resetInsertBar() {
     $(':radio[name=selecthomebook]:checked').attr("checked", false);
 }
 
+
+
+
 var InsertBar = React.createClass({
-
-
     getDefaultProps : function () {
-        //this.props.handle="insertHomebook"
+        return {
+            handle : "insertHomebook"
+        }
     },
     handlerInsertClick : function (url) {
         var numPattern = /^[0-9]*$/;
@@ -124,12 +127,12 @@ var InsertBar = React.createClass({
         }else if(!numPattern.test($(":text[name=money]").val())){
             alert("숫자만 입력해주세요");
         }else{
-            insert_update($(this).attr("handle"), $("#homebookform").serialize());
+            insert_update(this.props.handle, $("#homebookform").serialize());
             resetInsertBar();
         }
     },
     handlerResetClick : function () {
-
+        resetInsertBar()
     },
     render : function () {
         return (

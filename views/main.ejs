@@ -32,6 +32,7 @@
 
 </head>
 <body>
+<!-- 상단 nav 바 -->
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -48,59 +49,8 @@
         </form>
     </div>
 </nav>
+<!-- //상단 nav 바 -->
 
-
-
-<!--우측 메뉴창
-<div class="col-md-3 box">
-<form id="search_form">
-<ul class="list-group">
-	<li class="list-group-item center">
-		<h3 class="nomargin">조회하기</h3>
-	</li>
-	<li class="list-group-item">
-	<div class="input-group date" id="dp1"  data-date-format="yyyy-mm-dd">
-		<input name="str_date" class="form-control " size="16" type="text"readonly>
-		<span class="input-group-btn add-on">
-			<a class="btn btn-default">
-				<img src="public/img/calendar.png" height="20" alt="">
-			</a>
-		</span>
-	</div>
-	</li>
-  <li class="list-group-item">
-	<div class="input-group date" id="dp2"  data-date-format="yyyy-mm-dd">
-		<input name="fin_date" class="form-control " size="16" type="text"  readonly>
-		<span class="input-group-btn add-on">
-			<a class="btn btn-default">
-				<img src="public/img/calendar.png" height="20" alt="">
-			</a>
-		</span>
-	 </div>
-  </li>
-  <li class="list-group-item">
-	<select name="in_out"class="form-control">
-			<option value="">
-				수입 과 지출
-			</option>
-			<option value="in">
-				수입
-			</option>
-			<option value="out">
-				지출
-			</option>
-	</select>
-  </li>
-  <li class="list-group-item">
-	&nbsp<input type="button" class="btn btn-info" id="search_btn" value="조회"/>
-  </li>
-</ul>
-</form>
-</div>
--->
-<div id="test-input">
-
-</div>
 <!-- 가운데 메인창 -->
 <div id ="main" class="container box">
     <table  class="table">
@@ -112,51 +62,15 @@
             <th>금액</th>
             <th>삭제</th>
         </tr>
-
-
-        <!--
-        <tr>
-            <td>
-                <input type="radio" name="selecthomebook" hb_id="${vo.id}"
-                paydate="${vo.payDate}"  in_out="${vo.inOut}" content="${vo.content}"
-                money="${vo.money}"/>
-            </td>
-            <td>${vo.payDate}</td>
-            <td>${vo.inOut=="in"?"수입":"지출"}</td>
-            <td>${vo.content }</td>
-            <td>${vo.money }</td>
-            <td align="center"><button type="button" homebookid="${vo.id}" class="close">×</button></td>
-        </tr>
-        -->
-
     </table>
 </div>
-<!--오른쪽 수입 지출 합계창
-<div class="col-md-3">
-<table class="table">
 
-	<tr>
-		<td>총수입</td>
-		<td id="in_sum">${inSum}</td>
-	</tr>
-	<tr>
-		<td>총지출</td>
-		<td id="out_sum">${outSum}</td>
-	</tr>
-	<tr>
-		<td>합계</td>
-		<td id="total">${inSum-outSum}</td>
-	</tr>
-</table>
+
+<!-- 가계부 삽입을 위한 footer -->
+<!-- 네브바 하단고정 옵션 -->
+<div id="footer-insert-bar" class="navbar navbar-default navbar-fixed-bottom" role="navigation">
 </div>
--->
-
-<!--
-	하단 네브바 항상 창의 하단에 달랄 붙어있음
-	삽입 및 수정 기능을 담당
--->
-<div id="footer-insert-bar" class="navbar navbar-default navbar-fixed-bottom" role="navigation"><!-- 네브바 하단고정 옵션 -->
-</div><!-- 가계부 삽입을 위한 footer -->
+<!-- //가계부 삽입을 위한 footer -->
 
 <div id="myModal" class="modal fade" data-backdrop="static">
     <div class="modal-dialog">
@@ -215,7 +129,7 @@
 
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+</div>
 
 
 
@@ -239,12 +153,15 @@
     }
 
     function insert_update(handle, serialize){
-        var method = 'post';
-        var url = '/api/homekeepers';
+        var method = '';
+        var url = '';
 
         if('update' == handle){
             method = 'post';
             url = '/api/homekeepers/homekeeper';
+        } else if ('insert' == handle) {
+            method = 'put';
+            url = '/api/homekeepers';
         }
 
         $.ajax({
@@ -263,32 +180,8 @@
 
     $(function(){
 
-
-        $('#dp1').datepicker({
-            orientation : 'top auto',
-            language : 'kr',
-            autoclose: true
-        });
-
-        $('#dp2').datepicker({
-            orientation : 'top auto',
-            language : 'kr',
-            autoclose: true
-        });
-
-        $('#dp3').datepicker({
-            orientation : 'bottom auto',
-            language : 'kr',
-            autoclose: true
-        });
-
-        $('#dp4').datepicker({
-            orientation : 'top auto',
-            language : 'kr',
-            autoclose: true
-        });
-
-        $("#logout_btn").click(function(){
+       /*
+       $("#logout_btn").click(function(){
             $.ajax({
                 type : 'post',
                 url : "./planner.io",
@@ -302,6 +195,7 @@
                 dataType : 'json'
             });//ajax end
         });
+
 
         $("#search_btn").click(function(){
 
@@ -320,20 +214,8 @@
                 insert_update()
             }
         });
+        */
 
-        //수정하기 세션
-        /*//모달창 띄우기
-        $("body").on("click", ":radio[name=selecthomebook]", function(){
-
-            $("#update_homebook_form").find(":hidden[name=id]").val($(this).attr("hb_id"));
-            $("#update_homebook_form").find(":text[name=pay_date]").val($(this).attr("paydate"));
-            $("#update_homebook_form").find("option[value="+$(this).attr("in_out")+"]").attr("selected", "selected");
-            $("#update_homebook_form").find(":text[name=content]").val($(this).attr("content"));
-            $("#update_homebook_form").find(":text[name=money]").val($(this).attr("money"));
-
-            $('#myModal').modal('show');
-
-        });*/
         //모달창 닫기
         $("#modal_close").click(function(){
             $(':radio[name=selecthomebook]:checked').attr("checked", false);
@@ -343,52 +225,6 @@
         $("#update").click(function(){
             insert_update("update", $("#update_homebook_form").serialize());
             $('#myModal').modal('hide');
-        });
-
-        //삽입하기 세션
-        //리셋하기
-        $("#reset").click(function(){
-            $(":hidden[name=hb_id]").val("");
-            $(":text[name=pay_date]").val("");
-            $("#homebookform>select[name=in_out] option:eq(0)").attr("selected", "selected");
-            $(":text[name=content]").val("");
-            $(":text[name=money]").val("");
-            $("#submit").attr("handle","insertHomebook");
-            $("#submit").val("등록");
-            $(':radio[name=selecthomebook]:checked').attr("checked", false);
-        });
-
-        //삽입하기
-
-        $("#submit").click(function(){
-            var numPattern = /^[0-9]*$/;
-            !numPattern.test($(":text[name=money]").val());
-            if($(":text[name=pay_date]").val()==""){
-                alert("지급일을 입력해주세요");
-            }else if($("#homebookform>select[name=in_out]").val()==""){
-                alert("수입 혹은 지출을 선택해주세요");ㅋ
-            }else if($(":text[name=content]").val()==""){
-                alert("내용을 입력해주세요");
-            }else if($(":text[name=money]").val()==""){
-                alert("금액을 입력해주세요");
-            }else if(!numPattern.test($(":text[name=money]").val())){
-                alert("숫자만 입력해주세요");
-            }else{
-                insert_update($(this).attr("handle"), $("#homebookform").serialize());
-                /*$.ajax({
-                 type : 'get',
-                 url : "/api/homekeepers",
-                 data : "month="+this_month+"&handle="+$(this).attr("handle")+"&"+$("#homebookform").serialize(),
-                 success : function (result) {
-                 refreshTable(result.homekeepers);
-                 },
-                 error : function(result){
-                 alert("error : "+result);
-                 },
-                 dataType : 'json'
-                 });*/
-                //ajax end
-            }
         });
 
         refreshTable();
