@@ -93,8 +93,44 @@ var DelButton = React.createClass({
     }
 })
 
+function resetInsertBar() {
+    $(":hidden[name=hb_id]").val("");
+    $(":text[name=pay_date]").val("");
+    $("#homebookform>select[name=in_out] option:eq(0)").attr("selected", "selected");
+    $(":text[name=content]").val("");
+    $(":text[name=money]").val("");
+    $("#submit").attr("handle","insertHomebook");
+    $("#submit").val("등록");
+    $(':radio[name=selecthomebook]:checked').attr("checked", false);
+}
+
 var InsertBar = React.createClass({
 
+
+    getDefaultProps : function () {
+        //this.props.handle="insertHomebook"
+    },
+    handlerInsertClick : function (url) {
+        var numPattern = /^[0-9]*$/;
+        !numPattern.test($(":text[name=money]").val());
+        if($(":text[name=pay_date]").val()==""){
+            alert("지급일을 입력해주세요");
+        }else if($("#homebookform>select[name=in_out]").val()==""){
+            alert("수입 혹은 지출을 선택해주세요");ㅋ
+        }else if($(":text[name=content]").val()==""){
+            alert("내용을 입력해주세요");
+        }else if($(":text[name=money]").val()==""){
+            alert("금액을 입력해주세요");
+        }else if(!numPattern.test($(":text[name=money]").val())){
+            alert("숫자만 입력해주세요");
+        }else{
+            insert_update($(this).attr("handle"), $("#homebookform").serialize());
+            resetInsertBar();
+        }
+    },
+    handlerResetClick : function () {
+
+    },
     render : function () {
         return (
 
@@ -120,8 +156,12 @@ var InsertBar = React.createClass({
                         <input  name="money" type="text" className="form-control"  maxlength="9" placeholder="write amount"/>
                     </div>
                     <div className="col-md-2 box">
-                        <input type="button" id="submit" handle="insertHomebook" className="btn btn-primary margin-right-small" value="등록"/>
-                        <input type="button" id="reset"  className="btn btn-warning" value="리셋"/>
+                        <input type="button" id="submit"
+                               className="btn btn-primary margin-right-small"
+                               onClick={this.handlerInsertClick} value="등록"/>
+                        <input type="button" id="reset"
+                               className="btn btn-warning"
+                               onClick={this.handlerResetClick} value="리셋"/>
                     </div>
                 </form>
             </div>
@@ -129,7 +169,7 @@ var InsertBar = React.createClass({
         );
     }
 })
-//
+
 var DatePicker =  React.createClass({
     componentDidMount : function () {
         $('.datepicker').datepicker({
@@ -151,3 +191,19 @@ var DatePicker =  React.createClass({
         );
     }
 })
+
+/*
+var InputTest = React.createClass({
+    handleBlur : function (event) {
+        console.log(event.target.value)
+        //alert(JSON.stringify(event));
+        alert(event.relatedTarget);
+        //this.setState({val: });
+    },
+    render : function () {
+        return (
+            <input onBlur={this.handleBlur} />
+        )
+    }
+})
+*/
