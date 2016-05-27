@@ -120,8 +120,8 @@ var InsertBar = React.createClass({
                         <input  name="money" type="text" className="form-control"  maxlength="9" placeholder="write amount"/>
                     </div>
                     <div className="col-md-2 box">
-                        <input type="button" id="submit" handle="insertHomebook" className="btn btn-primary" value="등록"/>
-                            <input type="button" id="reset"  className="btn btn-warning" value="리셋"/>
+                        <input type="button" id="submit" handle="insertHomebook" className="btn btn-primary margin-right-small" value="등록"/>
+                        <input type="button" id="reset"  className="btn btn-warning" value="리셋"/>
                     </div>
                 </form>
             </div>
@@ -129,7 +129,7 @@ var InsertBar = React.createClass({
         );
     }
 })
-
+//
 var DatePicker =  React.createClass({
     componentDidMount : function () {
         $('.datepicker').datepicker({

@@ -42,3 +42,9 @@ th{
 td{
     text-align: center;
 }
+.datepicker {
+    padding: 0px;
+}
+.margin-right-small {
+    margin-right: 5%;
+}
