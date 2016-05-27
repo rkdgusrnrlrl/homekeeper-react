@@ -406,30 +406,6 @@
             $('#myModal').modal('hide');
         });
 
-        //삭제하기 세센
-        //삭제하기
-        $("body").on("click",".close",function(){
-            var tr = $(this).parent().parent();
-            var table = $(tr).parent();
-
-
-            $.ajax({
-                // type을 설정합니다.
-                method : 'delete',
-                url : "/api/homekeepers/homekeeper",
-                //사용자가 입력하여 id로 넘어온 값을 서버로 보냅니다.
-                data : "id="+$(this).attr('homebookid'),
-                //성공적으로 값을 서버로 보냈을 경우 처리하는 코드입니다.
-                success : function (result) {
-                    refreshTable();
-                },
-                error : function(result){
-                    alert("error : "+result);
-                },
-                dataType : 'text'
-            });//ajax end
-        });
-
         //삽입하기 세션
         //리셋하기
         $("#reset").click(function(){

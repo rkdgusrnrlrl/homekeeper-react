@@ -21,8 +21,7 @@ router.post('/api/homekeepers', function (req, res)  {
 //delete 하는 부분
 
 router.delete('/api/homekeepers/homekeeper', function (req, res)  {
-
-    console.log(req.param("id"))
+    console.log(`body : ${JSON.stringify(req.body)}`)
     var homekeeper = getObjFromParamForExpress(req);
     var id = homekeeper.id;
     deleteHomeKeeper(id);
@@ -113,7 +112,6 @@ function fromSnakeToCamel (string){
 function getObjFromParamForExpress(expressReq) {
 
     var keys = ["id" , "payDate", "inOut", "content", "money"];
-
     var obj = {}
     keys.forEach((val, index, arr) => {
         var key = val.replace(/([A-Z])/g, ($1) => "_"+$1.toLowerCase() )

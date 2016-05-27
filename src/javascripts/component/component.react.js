@@ -57,15 +57,37 @@ var HomeKeeperRow = React.createClass({
         return (
             <tr>
                 <td>
-                    <input type="radio" name="selecthomebook" hb_id={this.props.id} paydate={this.props.payDate}
-                           in_out={this.props.inOut} content={this.props.content} money={this.props.money} onClick={this.handlerClick}/>
+                    <input type="radio" name="selecthomebook"  onClick={this.handlerClick}/>
                 </td>
                 <td>{this.props.payDate}</td>
                 <td>{this.props.inOut=="in"?"수입":"지출"}</td>
                 <td>{this.props.content}</td>
                 <td>{this.props.money}</td>
-                <td><button type="button" homebookid="{this.prop.id}" className="close">×</button></td>
+                <td><DelButton id={this.props.id} url="/api/homekeepers/homekeeper" className="close">×</DelButton></td>
             </tr>
         );
     }
 });
+
+var DelButton = React.createClass({
+    handlerClick : function (url) {
+        $.ajax({
+            // type을 설정합니다.
+            method : 'delete',
+            url : this.props.url,
+            data : "id="+this.props.id,
+            success : function (result) {
+                refreshTable();
+            },
+            error : function(result){
+                alert("error : "+result);
+            },
+            dataType : 'json'
+        });//ajax end
+    },
+    render : function (){
+        return (
+            <button type="button" className="close" onClick={this.handlerClick}>×</button>
+        );
+    }
+})
