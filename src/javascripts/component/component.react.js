@@ -9,6 +9,7 @@ function makeTable (result) {
         document.getElementById('main')
     );
 }
+
 //React Component 가계부 테이블
 var HomeKeeperTable = React.createClass({
 
@@ -88,6 +89,65 @@ var DelButton = React.createClass({
     render : function (){
         return (
             <button type="button" className="close" onClick={this.handlerClick}>×</button>
+        );
+    }
+})
+
+var InsertBar = React.createClass({
+
+    render : function () {
+        return (
+
+            <div className="container">
+                <form id='homebookform'>
+                    <div className="col-md-3 box">
+                        <DatePicker />
+                    </div>
+                    <div className="col-md-2 box">
+                        <select name="in_out"className="form-control">
+                            <option value="in">
+                                수입
+                            </option>
+                            <option value="out">
+                                지출
+                            </option>
+                        </select>
+                    </div>
+                    <div className="col-md-3 box">
+                        <input  name="content" type="text" className="form-control" maxlength="15" placeholder="comment" />
+                    </div>
+                    <div className="col-md-2 box">
+                        <input  name="money" type="text" className="form-control"  maxlength="9" placeholder="write amount"/>
+                    </div>
+                    <div className="col-md-2 box">
+                        <input type="button" id="submit" handle="insertHomebook" className="btn btn-primary" value="등록"/>
+                            <input type="button" id="reset"  className="btn btn-warning" value="리셋"/>
+                    </div>
+                </form>
+            </div>
+
+        );
+    }
+})
+
+var DatePicker =  React.createClass({
+    componentDidMount : function () {
+        $('.datepicker').datepicker({
+            orientation : 'bottom auto',
+            language : 'kr',
+            autoclose: true
+        });
+    },
+    render : function () {
+        return (
+            <div className="input-group date datepicker"  data-date-format="yyyy-mm-dd">
+                <input name="pay_date" className="form-control " size="16" type="text"  readonly />
+                <span className="input-group-btn add-on">
+                    <a className="btn btn-default">
+                        <img src="/img/calendar.png" height="20" alt=""/>
+                    </a>
+                </span>
+            </div>
         );
     }
 })

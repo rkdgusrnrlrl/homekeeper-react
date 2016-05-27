@@ -152,71 +152,7 @@
 	하단 네브바 항상 창의 하단에 달랄 붙어있음
 	삽입 및 수정 기능을 담당
 -->
-<div class="navbar navbar-default navbar-fixed-bottom" role="navigation"><!-- 네브바 하단고정 옵션 -->
-    <div class="container"><!-- 가운데 정렬 컨테이너 -->
-        <form id='homebookform'>
-
-            <!-- 날자 입력 input (Boostrap-DatePicker-라이브러리사용) -->
-            <div class="col-md-3 box">
-                <div class="input-group date" id="dp3"  data-date-format="yyyy-mm-dd">
-                    <input name="pay_date" class="form-control " size="16" type="text"  readonly>
-						<span class="input-group-btn add-on">
-							<a class="btn btn-default">
-                                <img src="/img/calendar.png" height="20" alt="">
-                            </a>
-						</span>
-                </div>
-            </div>
-
-
-            <!-- 수입 지출을 선택하는 Select Box -->
-
-
-            <div class="col-md-2 box">
-                <select name="in_out"class="form-control">
-                    <option value="in">
-                        수입
-                    </option>
-                    <option value="out">
-                        지출
-                    </option>
-                </select>
-            </div>
-
-
-
-
-            <!-- 설명을 달아줄 수있는 텍스트 필드 -->
-
-
-            <div class="col-md-3 box">
-                <input  name="content" type="text" class="form-control" maxlength="15" placeholder="comment" >
-            </div>
-
-
-            <!-- 금액을 입력하는 텍스트 필드 -->
-
-
-            <div class="col-md-2 box">
-                <input  name="money" type="text" class="form-control"  maxlength="9" placeholder="write amount">
-            </div>
-
-
-            <!-- 각값의 null check 후 submit 시키는 버튼 -->
-            <!-- handle 값을 가지고 있어 Insert인데 Update 인지를 판단 -->
-            <!-- 각 인풋 타입들을 Defualt로 초기화시킴 -->
-
-            <div class="col-md-2 box">
-                <input type="button" id="submit" handle="insertHomebook" class="btn btn-primary" value="등록">
-                <input type="button" id="reset"  class="btn btn-warning" value="리셋">
-            </div>
-
-
-
-
-
-        </form>
-    </div><!-- 가계부 삽입을 위한 container -->
+<div id="footer-insert-bar" class="navbar navbar-default navbar-fixed-bottom" role="navigation"><!-- 네브바 하단고정 옵션 -->
 </div><!-- 가계부 삽입을 위한 footer -->
 
 <div id="myModal" class="modal fade" data-backdrop="static">
@@ -453,6 +389,11 @@
         });
 
         refreshTable();
+
+        ReactDOM.render(
+                React.createElement(InsertBar, null),
+                document.getElementById('footer-insert-bar')
+        );
 
     });//end $function
 </script>
