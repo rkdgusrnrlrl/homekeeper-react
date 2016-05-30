@@ -19,7 +19,6 @@ router.post('/api/homekeepers', function (req, res)  {
 });
 
 //delete 하는 부분
-
 router.delete('/api/homekeepers/homekeeper', function (req, res)  {
     console.log(`body : ${JSON.stringify(req.body)}`)
     var homekeeper = getObjFromParamForExpress(req);
@@ -30,7 +29,6 @@ router.delete('/api/homekeepers/homekeeper', function (req, res)  {
 
 
 //modify 하는 부분
-
 router.post('/api/homekeepers/homekeeper', function (req, res)  {
     var homekeeper = getObjFromParamForExpress(req);
     var id = homekeeper.id;
@@ -41,13 +39,21 @@ router.post('/api/homekeepers/homekeeper', function (req, res)  {
 
 module.exports = router;
 
-
-
 //DB 연동부분
+
+/**
+ * 가계부 내용을 등록 함
+ * @param homekeeper
+ */
 function insertHomekeeper(homekeeper) {
     mock_data.homekeepers.push(homekeeper);
 }
 
+/**
+ * 해당 id 의 가계부를 업데이트 함
+ * @param id
+ * @param homekeeper
+ */
 function updateHomekeeper(id, homekeeper) {
     mock_data.homekeepers = mock_data.homekeepers.map((val, ind, arr)=> {
         if (val.id == id)  val = homekeeper;
@@ -73,11 +79,7 @@ function deleteHomeKeeper(id) {
     });
 }
 
-
 //request response 핸들링 하는 함수
-
-
-
 
 /**
  * 파라미터의 값을 추출해 json 으로 만들어줌
@@ -109,20 +111,50 @@ function fromSnakeToCamel (string){
     return string.replace(/(\_[a-z])/g, ($1) =>  $1.toUpperCase().replace('_',''));
 }
 
+/**
+ * 한글로 인코딩된 value 를 디코딩하는 함수
+ * @param expressReq
+ * @param key
+ * @returns {string}
+ */
+function decodeValue(val) {
+    return decodeURIComponent(val.replace(/[+]/g, ' '));
+}
+
+/**
+ * Express.js request 에서 파라미터값 추출하는 함수
+ * @param expressReq
+ * @param key
+ * @returns {*}
+ */
+function getParam(expressReq, key) {
+    var value = expressReq.param(key)
+    if (value) {
+        if (key == 'content') {
+            return decodeValue(value);
+        } else {
+            return value
+        }
+    } else {
+        return "";
+    }
+}
+
+function camelToSnake(val) {
+    return val.replace(/([A-Z])/g, ($1) => "_" + $1.toLowerCase());
+}
+/**
+ * Express.js 에서 파라미터 값 추출해 object로 반환하는 함수
+ * @param expressReq
+ * @returns {{}}
+ */
 function getObjFromParamForExpress(expressReq) {
 
     var keys = ["id" , "payDate", "inOut", "content", "money"];
     var obj = {}
     keys.forEach((val, index, arr) => {
-        var key = val.replace(/([A-Z])/g, ($1) => "_"+$1.toLowerCase() )
-        if (expressReq.param(key)) {
-            if(key == 'content'){
-                obj[val] = decodeURIComponent(expressReq.param(key).replace(/[+]/g, ' '));
-            } else {
-                obj[val] = expressReq.param(key)
-            }
-        }
-
+        var key = camelToSnake(val)
+        obj[val] = getParam(expressReq, key)
     });
     return obj
 }
@@ -134,7 +166,6 @@ function getObjFromParamForExpress(expressReq) {
  */
 function responseJson(response, jsonData) {
     response.setHeader("Content-Type", "application/json");
-
 
     var homekeeperList = findHomeKeeperList(jsonData);
     response.write(homekeeperList);
