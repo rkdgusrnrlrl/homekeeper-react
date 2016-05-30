@@ -28,9 +28,14 @@ var HomeKeeperTable = React.createClass({
 
         return (
             <table className="table">
-                <tr><th>선택</th><th>사용일자</th><th>수입/지출</th><th>내역</th><th>금액</th><th>삭제</th>
-                </tr>
-                {rows}
+                <thead>
+                    <tr>
+                        <th>선택</th><th>사용일자</th><th>수입/지출</th><th>내역</th><th>금액</th><th>삭제</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {rows}
+                </tbody>
             </table>
         )
     }
@@ -110,10 +115,11 @@ function resetInsertBar() {
 var InsertBar = React.createClass({
     getDefaultProps : function () {
         return {
-            handle : "insertHomebook"
+            handle : "insert"
         }
     },
     handlerInsertClick : function (url) {
+        console.log("handle : "+this.props.handle);
         var numPattern = /^[0-9]*$/;
         !numPattern.test($(":text[name=money]").val());
         if($(":text[name=pay_date]").val()==""){

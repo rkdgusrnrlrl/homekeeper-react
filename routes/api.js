@@ -5,6 +5,10 @@
 var express = require('express');
 var router = express.Router();
 
+// insert => put
+// update => post
+// delete => delete
+// select => get
 
 //select 하는 부분
 router.get('/api/homekeepers', function (req, res)  {
@@ -12,7 +16,7 @@ router.get('/api/homekeepers', function (req, res)  {
 });
 
 //insert 하는 부분
-router.post('/api/homekeepers', function (req, res)  {
+router.put('/api/homekeepers', function (req, res)  {
     var homekeeper = getObjFromParamForExpress(req);
     insertHomekeeper(homekeeper);
     responseJson(res, mock_data);
